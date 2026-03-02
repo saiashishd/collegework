@@ -1,4 +1,4 @@
-🚦 Distributed Machine Learning for Road Collision Severity Prediction
+   🚦 Distributed Machine Learning for Road Collision Severity Prediction
 1. Project Summary
 
 This project develops a scalable distributed machine learning pipeline to predict road collision severity using large-scale UK road safety data.
