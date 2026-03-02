@@ -1,14 +1,8 @@
 # **Distributed Machine Learning for Large-Scale Road Collision Severity Prediction**
 
----
-
 ## **Project Overview**
 
-* Implements a fully distributed machine learning pipeline using Apache Spark.
-* Predicts road collision severity using UK traffic collision data.
-* Evaluates multiple regression models within a distributed computing architecture.
-* Analyzes scalability, computational efficiency, and performance trade-offs.
-* Demonstrates the effectiveness of ensemble models for structured big data applications.
+This project develops a scalable distributed machine learning framework using Apache Spark to predict road collision severity from extensive UK traffic collision records. Various regression models are implemented and assessed within a parallel computing environment to evaluate predictive accuracy, scalability, and computational efficiency. The results highlight the advantages of ensemble techniques in handling structured big data, particularly in capturing complex nonlinear patterns present in transportation datasets.
 
 ---
 
@@ -25,24 +19,40 @@
 
 ## **Dataset Description**
 
-* Source: UK Department for Transport – Road Collision Statistics
+* **Source:** UK Department for Transport – Road Collision Statistics
 * Multi-decade structured national collision records
-* Features include:
 
-  * Collision year
-  * Severity
-  * Number of vehicles involved
-  * Number of casualties
-  * Speed limit
-  * Weather conditions
-  * Road surface conditions
-  * Lighting conditions
-  * Time of collision
-* Large temporal coverage suitable for distributed big data processing
+**Key Features:**
+
+* Collision year
+* Severity
+* Number of vehicles involved
+* Number of casualties
+* Speed limit
+* Weather conditions
+* Road surface conditions
+* Lighting conditions
+* Time of collision
+
+Large temporal coverage makes the dataset suitable for distributed big data processing.
 
 ---
 
-## **Distributed Architecture & Configuration**
+# **Methodology**
+
+## 1.Data Engineering & Preprocessing
+
+* CSV ingestion in PERMISSIVE mode
+* Safe casting using `try_cast`
+* Null handling and validation
+* Repartitioning by collision year for parallelism
+* Conversion to partitioned Parquet format
+* Feature engineering (hour_of_day extraction)
+* VectorAssembler for ML feature creation
+
+---
+
+## 2.Distributed Architecture Configuration
 
 * 4 Executors
 * 4 Cores per Executor
@@ -50,56 +60,65 @@
 * 4GB Driver Memory
 * 400 Shuffle Partitions
 * Kryo Serialization enabled
-* Repartitioning by collision year
-* Partitioned Parquet storage
 * DataFrame API optimization (Catalyst & Tungsten engines)
 
 ---
 
-## **Data Engineering Pipeline**
+## 3.Model Training Strategy
 
-* CSV ingestion in PERMISSIVE mode
-* Safe casting using `try_cast`
-* Null handling and validation
-* Repartitioning for parallel processing
-* Conversion to partitioned Parquet format
-* Custom feature engineering (hour_of_day extraction)
-* Vector assembly for ML feature creation
+* 80/20 Train-Test Split
+* 3-fold Distributed Cross-Validation (parallelism = 4)
+* Evaluation Metric: **Root Mean Squared Error (RMSE)**
 
----
-
-## **Machine Learning Models Evaluated**
+### Models Evaluated:
 
 * Linear Regression
 * Decision Tree Regressor
 * Random Forest Regressor
 * Gradient Boosted Trees Regressor
-* Evaluation Metric: Root Mean Squared Error (RMSE)
-* 3-fold distributed cross-validation (parallelism = 4)
 
 ---
 
-## **Model Performance Comparison**
+# **Results**
 
-* Linear Regression – RMSE: 0.4388 – Training Time: 15.10s
-* Decision Tree – RMSE: 0.4355 – Training Time: 17.45s
-* Random Forest – RMSE: 0.4323 – Training Time: 98.79s
-* Gradient Boosted Trees – RMSE: 0.4329 – Training Time: 63.87s
+## Model Performance Comparison
 
-**Best Performing Model:** Random Forest (Lowest RMSE)
+| Model                  | RMSE              | Training Time |
+| ---------------------- | ----------------- | ------------- |
+| Linear Regression      | 0.4388            | 15.10s        |
+| Decision Tree          | 0.4355            | 17.45s        |
+| Random Forest          | **0.4323 (Best)** | 98.79s        |
+| Gradient Boosted Trees | 0.4329            | 63.87s        |
+
+### Key Findings
+
+* Random Forest achieved the lowest RMSE
+* Ensemble models outperformed linear regression
+* Tree-based models effectively captured nonlinear relationships
+* Improved accuracy came with higher computational cost
 
 ---
 
-## **Feature Importance Insights**
+# **Feature Importance Insights**
 
-* Number of casualties identified as dominant predictor
-* Number of vehicles involved strongly influences severity
-* Speed limit shows nonlinear impact on severity
-* Supports the use of ensemble tree-based methods
+* Number of casualties is the strongest predictor
+* Number of vehicles significantly influences severity
+* Speed limit exhibits nonlinear impact
+* Confirms suitability of ensemble tree-based methods
 
 ---
 
-## **Scalability & Big Data Insights**
+# **Exploratory Data Analysis Findings**
+
+* Slight collisions dominate dataset distribution
+* Long-term decline in total collisions since early 2000s
+* Urban low-speed zones show higher collision frequency
+* Weather moderately influences severity
+* Weak linear correlations justify nonlinear modeling
+
+---
+
+# **Scalability & Big Data Insights**
 
 * Strong scaling: Increasing executors reduced training time
 * Weak scaling: Training time increased proportionally with dataset size
@@ -110,17 +129,7 @@
 
 ---
 
-## **Exploratory Data Analysis Findings**
-
-* Slight collisions dominate dataset distribution
-* Long-term decline in total collisions since early 2000s
-* Urban low-speed zones show higher collision frequency
-* Weather has moderate influence on severity
-* Weak linear correlations support nonlinear modeling approaches
-
----
-
-## **Distributed vs Single-Node Comparison**
+# **Distributed vs Single-Node Comparison**
 
 * 50,000-row sample evaluated using Scikit-learn Random Forest
 * Distributed Spark efficiently processed full dataset
@@ -128,22 +137,18 @@
 
 ---
 
-## **Conclusion**
+# **Interactive Dashboards (Tableau)**
 
-* Successfully developed a scalable distributed ML pipeline
-* Random Forest achieved the lowest RMSE
-* Ensemble models outperformed linear models
-* Distributed training significantly improves scalability
-* Demonstrates trade-off between computational cost and predictive accuracy
+**[Dashboard 1 – Data Quality & Pipeline Monitoring](https://prod-in-a.online.tableau.com/t/ashsish2345-3816dbd389/authoring/ashish/Dashboard1)**
 
----
+**[Dashboard 2 – Exploratory Data Analysis](https://prod-in-a.online.tableau.com/#/site/ashsish2345-3816dbd389/views/seconddashboard/Dashboard1)**
 
-## **Future Work**
+**[Dashboard 3 – Model Performance & Feature Importance](https://prod-in-a.online.tableau.com/#/site/ashsish2345-3816dbd389/views/thirddashboard_17719403723090/Dashboard1?:iid=1)**
 
-* Implement ordinal classification approach
-* Integrate geospatial clustering
-* Extend hyperparameter optimization
-* Deploy in cloud environments (AWS / Azure Spark)
-* Conduct statistical significance testing of model differences
+**[Dashboard 4 – Scalability & Cost Analysis](https://prod-in-a.online.tableau.com/#/site/ashsish2345-3816dbd389/views/dashboardfour/Dashboard1)**
+
+# **Conclusion**
+
+The project demonstrates that distributed machine learning using Apache Spark significantly improves scalability and computational efficiency for large-scale transportation analytics. Random Forest achieved the best predictive performance, validating the effectiveness of ensemble methods for structured big data problems. The study highlights the trade-off between computational cost and predictive accuracy while confirming the value of distributed ML architectures.
 
 ---
