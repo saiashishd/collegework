@@ -115,6 +115,7 @@ These improvements significantly reduced I/O overhead and improved distributed p
 6. System Architecture
 
 6.1 High-Level Pipeline
+
 Raw CSV Data
       ↓
 Spark Data Ingestion
@@ -169,7 +170,7 @@ Captures nonlinear splits
 
 Interpretable structure
 
-7.3 Random Forest Regressor ⭐
+7.3 Random Forest Regressor 
 
 Ensemble of decision trees
 
@@ -194,7 +195,7 @@ Linear Regression	0.4388	15.10 s
 Decision Tree	0.4355	17.45 s
 Random Forest	0.4323	98.79 s
 Gradient Boosted Trees	0.4329	63.87 s
-🏆 Best Model: Random Forest Regressor
+Best Model: Random Forest Regressor
 
 Random Forest achieved the lowest RMSE, demonstrating superior handling of nonlinear relationships.
 
@@ -309,9 +310,7 @@ REST API deployment for real-time inference
 
 14. Conclusion
 
-This project demonstrates how distributed machine learning frameworks can effectively process and model national-scale traffic data.
-
-By combining optimized data engineering techniques with ensemble learning models, the system achieves:
+This project demonstrates how distributed machine learning frameworks can effectively process and model national-scale traffic data.By combining optimized data engineering techniques with ensemble learning models, the system achieves:
 
 High predictive accuracy
 
