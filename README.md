@@ -117,21 +117,21 @@ These improvements significantly reduced I/O overhead and improved distributed p
 6.1 High-Level Pipeline
 
 Raw CSV Data
-      ↓
+      >
 Spark Data Ingestion
-      ↓
+      >
 Data Cleaning & Validation
-      ↓
+      >
 Feature Engineering
-      ↓
+      >
 Vector Assembler
-      ↓
+      >
 Distributed Model Training
-      ↓
+      >
 Cross-Validation
-      ↓
+      >
 Evaluation (RMSE)
-      ↓
+      >
 Tableau Visualization
 
 6.2 Machine Learning Workflow
