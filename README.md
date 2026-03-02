@@ -151,4 +151,3 @@ Large temporal coverage makes the dataset suitable for distributed big data proc
 
 The project demonstrates that distributed machine learning using Apache Spark significantly improves scalability and computational efficiency for large-scale transportation analytics. Random Forest achieved the best predictive performance, validating the effectiveness of ensemble methods for structured big data problems. The study highlights the trade-off between computational cost and predictive accuracy while confirming the value of distributed ML architectures.
 
----
